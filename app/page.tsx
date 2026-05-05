@@ -11,7 +11,7 @@ export default function Home() {
       <section className="max-w-2xl mx-auto px-6 pt-24 pb-20 text-center">
         <div className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-emerald-300 text-emerald-700 bg-emerald-50 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          Powered by Claude AI
+          Powered by Claude / Gemini AI
         </div>
 
         <h1 className="font-serif text-5xl leading-tight tracking-tight text-gray-900 mb-5">

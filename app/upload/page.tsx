@@ -262,7 +262,9 @@ async function handleFormSubmit(e: React.FormEvent) {
 
         {/* Submit button */}
         <button onClick={handleFormSubmit} disabled={isLoading} className="w-full py-3.5 rounded-xl text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 active:scale-[0.99] transition-all">
-           {isLoading ? "Analyzing..." : "Analyze my application →"}
+           {isLoading ? (
+            <span className="w-6 h-6 border-[2px] border-white border-b-transparent rounded-full inline-block box-border animate-spin"></span>
+           ) : "Analyze my application →"}
         </button>
 
         <p className="text-center text-xs text-gray-300">

@@ -28,15 +28,15 @@ Your task is to deeply tailor the resume to align with the job description.
 {
   "tailoredCV": "Fully rewritten and optimized resume text here",
   "stats": {
-    "skills_matched": 0,
+    "skills_matched": ['skill1', 'skill2'],
     "gaps_found": ["gap1", "gap2"],
-    "keywords_added": 0
+    "keywords_added": ['keyword1' , 'keyword2' ]
   }
 }
 
 ### Additional Rules:
-- "skills_matched" must be a number
-- "keywords_added" must be a number
+- "skills_matched" must be a array of skills that matched
+- "keywords_added" must be a array of keywords added
 - "gaps_found" must be an array of missing or weak skills based on the job description
 - Ensure the resume remains realistic and aligned with the candidate’s background
 

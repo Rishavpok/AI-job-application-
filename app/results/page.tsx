@@ -1,14 +1,15 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function ResultsPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [tailoredCV, setTailoredCV] = useState<string | null>(null);
   const [coverLetter, setCoverLetter] = useState<string | null>(null);
-  const [skillsMatch, setSkillsMatch] = useState<{
-    matched: string[];
-    gaps: string[];
-  } | null>(null);
+  const [gapsFound, setgapsfound] = useState([]);
+  const [skillsMatch, setSkillsMatch] = useState([]);
+  const [keywordAdded, setkeywordAdded] = useState([]);
+  const [stats, setStats] = useState(null);
 
   const printArea = useRef(null);
 
@@ -37,13 +38,23 @@ export default function ResultsPage() {
   useEffect(() => {
     setTailoredCV(localStorage.getItem("tailoredCV") || "");
     setCoverLetter(localStorage.getItem("coverLetter") || "");
+    const storedStats = localStorage.getItem("stats");
+    const parsed = storedStats ? JSON.parse(storedStats) : null;
+
+    setStats(parsed);
+    setSkillsMatch(parsed.skills_matched)
+    setgapsfound(parsed.gaps_found)
+    setkeywordAdded(parsed.keywords_added)
   }, []);
   return (
     <main className="min-h-screen bg-white font-sans">
       {/* ── Navbar with step indicator ── */}
       <nav className="flex items-center justify-between px-10 py-4 border-b border-gray-100">
         <span className="font-serif text-xl tracking-tight">
-          Job<span className="italic text-emerald-600">Craft</span> AI
+          <Link href="/">
+            {" "}
+            Job<span className="italic text-emerald-600">Craft</span> AI{" "}
+          </Link>
         </span>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="flex items-center gap-1.5 text-gray-300">
@@ -101,17 +112,17 @@ export default function ResultsPage() {
           </div>
           <div className="flex items-center gap-6 text-center">
             <div>
-              <p className="text-lg font-medium text-emerald-800">12</p>
+              <p className="text-lg font-medium text-emerald-800">{skillsMatch.length}</p>
               <p className="text-xs text-emerald-600">Skills matched</p>
             </div>
             <div className="w-px h-8 bg-emerald-200" />
             <div>
-              <p className="text-lg font-medium text-emerald-800">3</p>
+              <p className="text-lg font-medium text-emerald-800">{ gapsFound.length }</p>
               <p className="text-xs text-emerald-600">Gaps found</p>
             </div>
             <div className="w-px h-8 bg-emerald-200" />
             <div>
-              <p className="text-lg font-medium text-emerald-800">5</p>
+              <p className="text-lg font-medium text-emerald-800">{ keywordAdded.length }</p>
               <p className="text-xs text-emerald-600">Keywords added</p>
             </div>
           </div>
@@ -121,7 +132,7 @@ export default function ResultsPage() {
       {/* ── Tabs ── */}
       <div className="max-w-3xl mx-auto px-6 mb-6">
         <div className="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit">
-          {["Tailored CV", "Cover letter", "Skills match"].map((tab, i) => (
+          {["Tailored CV", "Cover letter"].map((tab, i) => (
             <button
               key={tab}
               onClick={() => handleTabClick(i)}
@@ -230,13 +241,7 @@ export default function ResultsPage() {
                 Skills matched
               </p>
               <div className="space-y-2">
-                {[
-                  "React / Next.js",
-                  "TypeScript",
-                  "REST APIs",
-                  "Tailwind CSS",
-                  "Git",
-                ].map((skill) => (
+                {skillsMatch.map((skill) => (
                   <div key={skill} className="flex items-center gap-2">
                     <svg
                       width="11"
@@ -266,7 +271,7 @@ export default function ResultsPage() {
                 Gaps to address
               </p>
               <div className="space-y-2">
-                {["Node.js", "PostgreSQL", "Docker"].map((skill) => (
+                {gapsFound.map((skill) => (
                   <div key={skill} className="flex items-center gap-2">
                     <svg
                       width="11"
@@ -287,7 +292,7 @@ export default function ResultsPage() {
             </div>
 
             {/* Next step CTA */}
-            <div className="bg-gray-900 rounded-xl p-4 text-center">
+            {/* <div className="bg-gray-900 rounded-xl p-4 text-center">
               <p className="text-xs font-medium text-white mb-1">
                 Ready for interviews?
               </p>
@@ -297,7 +302,7 @@ export default function ResultsPage() {
               <button className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors">
                 Prepare for interview →
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
