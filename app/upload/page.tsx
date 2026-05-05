@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -93,9 +94,7 @@ async function handleFormSubmit(e: React.FormEvent) {
     <main className="min-h-screen bg-white font-sans">
       {/* ── Navbar with step indicator ── */}
       <nav className="flex items-center justify-between px-10 py-4 border-b border-gray-100">
-        <span className="font-serif text-xl tracking-tight">
-          Job<span className="italic text-emerald-600">Craft</span> AI
-        </span>
+         <Link href="/">Job<span className="italic text-emerald-600">Craft</span> AI</Link>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="flex items-center gap-1.5">
             <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-medium text-[10px]">

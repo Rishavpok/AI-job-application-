@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     if (!file || !jobDescription) {
       return NextResponse.json(
         { error: "Resume and job description are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,9 +34,9 @@ export async function POST(req: NextRequest) {
     // const tailoredCV = (message.content[0] as { text: string }).text;
 
     return NextResponse.json({
-      tailoredCV: `John Doe
+      tailoredCV: `Rishav Pokharel
 Frontend Developer | Kathmandu, Nepal
-john.doe@email.com | github.com/johndoe | linkedin.com/in/johndoe
+rishav.pokharel@email.com | github.com/rishavpokharel | linkedin.com/in/rishavpokharel
 
 SUMMARY
 Mid-level Frontend Developer with 3+ years of experience building scalable web applications using React, Next.js, and Angular. Passionate about delivering pixel-perfect UIs and seamless user experiences in fast-paced product teams.
@@ -62,17 +62,16 @@ EDUCATION
 Bachelor of Computer Science
 Tribhuvan University, Kathmandu — 2021`,
 
-      resumeText: `John Doe Frontend Developer Kathmandu Nepal john.doe@email.com
+      resumeText: `Rishav Pokharel Frontend Developer Kathmandu Nepal rishav.pokharel@email.com
 3+ years experience in React Next.js Angular TypeScript Tailwind CSS
 Worked at Acme Tech and StartupXYZ building web applications and components`,
     });
-
   } catch (error: any) {
     console.error("API ERROR:", error);
 
     return NextResponse.json(
       { error: error.message || "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

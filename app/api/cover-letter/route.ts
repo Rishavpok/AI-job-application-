@@ -40,7 +40,7 @@ What excites me most about this opportunity is the chance to work on products th
 Thank you for considering my application. I would love the opportunity to discuss how my background aligns with your needs.
 
 Warm regards,
-John Doe`,
+Rishav Pokharel`,
     });
 
   } catch (error) {
