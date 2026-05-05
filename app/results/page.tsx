@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ResultsPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,9 +10,29 @@ export default function ResultsPage() {
     gaps: string[];
   } | null>(null);
 
+  const printArea = useRef(null);
+
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
   };
+
+  function printContent() {
+    const content = printArea?.current?.innerHTML;
+    const printWindow = window.open("", "", "width=800,height=600");
+    printWindow?.document.write(`
+    <html>
+      <head>
+        <title>Print</title>
+      </head>
+      <body>
+        <pre> ${content}</pre>
+      </body>
+    </html>
+  `);
+
+    printWindow?.document.close();
+    printWindow?.print();
+  }
 
   useEffect(() => {
     setTailoredCV(localStorage.getItem("tailoredCV") || "");
@@ -157,7 +177,10 @@ export default function ResultsPage() {
                       </svg>
                       Edit
                     </button>
-                    <button className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center gap-1 font-medium transition-colors">
+                    <button
+                      onClick={() => printContent()}
+                      className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center gap-1 font-medium transition-colors"
+                    >
                       <svg
                         width="12"
                         height="12"
@@ -180,96 +203,20 @@ export default function ResultsPage() {
 
               {/* CV body (static placeholder) */}
               <div className="px-6 py-6 space-y-5 text-sm">
-                { activeTab === 0 && (
-                  <pre className="text-xs text-gray-600 whitespace-pre-wrap">
+                {activeTab === 0 && (
+                  <pre
+                    ref={printArea}
+                    className="text-xs text-gray-600 whitespace-pre-wrap"
+                  >
                     {tailoredCV || "Loading tailored CV..."}
                   </pre>
                 )}
 
-                       { activeTab === 1 && (
+                {activeTab === 1 && (
                   <pre className="text-xs text-gray-600 whitespace-pre-wrap">
                     {coverLetter || "Loading tailored cover letter..."}
                   </pre>
                 )}
-                {/* <div className="pb-4 border-b border-gray-100">
-                  <h2 className="font-serif text-2xl text-gray-900 mb-1">
-                    John Doe
-                  </h2>
-                  <p className="text-xs text-gray-500">
-                    Frontend Developer · Kathmandu, Nepal · john@email.com
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">
-                    Summary
-                  </p>
-                  <p className="text-xs text-gray-600 leading-relaxed">
-                    Mid-level Frontend Developer with 3+ years of experience
-                    building scalable web applications using React, Next.js, and
-                    Angular. Proven ability to deliver pixel-perfect UIs and
-                    integrate REST APIs in fast-paced product teams.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">
-                    Skills
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      "React",
-                      "Next.js",
-                      "Angular",
-                      "TypeScript",
-                      "Tailwind CSS",
-                      "REST APIs",
-                      "Git",
-                      "Figma",
-                    ].map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-md"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-3">
-                    Experience
-                  </p>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <p className="text-sm font-medium text-gray-800">
-                          Frontend Developer
-                        </p>
-                        <p className="text-xs text-gray-400">2022 – Present</p>
-                      </div>
-                      <p className="text-xs text-emerald-600 mb-1.5">
-                        Acme Tech, Kathmandu
-                      </p>
-                      <ul className="space-y-1">
-                        {[
-                          "Built and maintained 10+ React components used across 3 products",
-                          "Reduced page load time by 40% through lazy loading and code splitting",
-                          "Collaborated with design team to implement pixel-perfect UI from Figma",
-                        ].map((item) => (
-                          <li
-                            key={item}
-                            className="text-xs text-gray-500 leading-relaxed flex gap-2"
-                          >
-                            <span className="text-emerald-400 mt-0.5">·</span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>

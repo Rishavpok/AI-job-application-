@@ -4,22 +4,49 @@ export const analyzeresumePrompt = (
 ) => `
 You are an expert resume writer and career coach.
 
-I will give you a candidate's resume and a job description.
-Your job is to rewrite the resume to better match the job.
+I will provide:
+1. A candidate's resume  
+2. A job description  
+
+Your task is to deeply tailor the resume to align with the job description.
+
+### Instructions:
+- Rewrite the professional summary to strongly match the role
+- Optimize the resume for ATS (Applicant Tracking Systems)
+- Highlight and prioritize relevant skills, technologies, and experience
+- Naturally incorporate important keywords from the job description
+- Identify missing or weak areas (skill gaps)
+- Keep the tone professional, concise, and impactful
+- Do NOT fabricate experience, but you may reframe existing experience strategically
+
+### Output Requirements:
+- Return the response in STRICT JSON format only
+- Do NOT include explanations, notes, or extra text outside JSON
+- Ensure the JSON is valid and properly formatted
+
+### JSON Structure:
+{
+  "tailoredCV": "Fully rewritten and optimized resume text here",
+  "stats": {
+    "skills_matched": 0,
+    "gaps_found": ["gap1", "gap2"],
+    "keywords_added": 0
+  }
+}
+
+### Additional Rules:
+- "skills_matched" must be a number
+- "keywords_added" must be a number
+- "gaps_found" must be an array of missing or weak skills based on the job description
+- Ensure the resume remains realistic and aligned with the candidate’s background
+
+Now process the following:
 
 RESUME:
 ${resumeText}
 
 JOB DESCRIPTION:
 ${jobDescription}
-
-Your task:
-- Rewrite the summary section to match the role
-- Highlight skills and experiences relevant to the JD
-- Add missing keywords from the JD naturally
-- Keep the tone professional
-
-Return only the rewritten resume text. No explanations.
 `;
 
 export const coverLetterPrompt = (
