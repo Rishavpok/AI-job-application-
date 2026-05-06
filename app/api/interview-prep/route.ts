@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
     const service = new AIService('gemini')
 
-    const response = service.interview(interviewPrepPrompt(jobDescription))
+    const response = await service.interview(interviewPrepPrompt(jobDescription))
 
     // const message = await client.messages.create({
     //   model: "claude-sonnet-4-20250514",
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: error },
       { status: 500 }
     );
   }

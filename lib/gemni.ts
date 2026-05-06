@@ -22,6 +22,7 @@ export class GeminiService {
             contents: prompt,
         });
 
+
         return response.text
     }
 }

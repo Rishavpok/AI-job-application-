@@ -21,7 +21,18 @@ export default function ResultsPage() {
 
   async function handleInterview() {
     try {
-      
+      const interviewQuestion = await fetch("/api/interview-prep", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jobDescription: jobDescription,
+        }),
+      });
+
+      // const questions = await interviewQuestion.json()
+
+      console.log(interviewQuestion)
+
     } catch (error) {
       alert("Something went wrong. Please try again.");
     } finally {
@@ -317,7 +328,7 @@ export default function ResultsPage() {
               <p className="text-xs text-gray-400 mb-4 leading-relaxed">
                 Get predicted questions based on this role
               </p>
-              <button className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors">
+              <button onClick={handleInterview} className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors">
                 Prepare for interview →
               </button>
             </div>
