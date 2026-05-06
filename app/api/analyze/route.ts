@@ -1,7 +1,6 @@
 export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/lib/claude";
 import { analyzeresumePrompt } from "@/lib/prompts";
 import { extractTextFromPDF } from "@/lib/pdf-parser";
 import { AIService } from "@/lib/aiservice";

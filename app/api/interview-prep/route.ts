@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/claude";
 import { interviewPrepPrompt } from "@/lib/prompts";
+import { AIService } from "@/lib/aiservice";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,20 +16,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      messages: [
-        {
-          role: "user",
-          content: interviewPrepPrompt(jobDescription),
-        },
-      ],
-    });
+    const service = new AIService('gemini')
 
-    const questions = (message.content[0] as { text: string }).text;
+    const response = service.interview(interviewPrepPrompt(jobDescription))
 
-    return NextResponse.json({ questions });
+    // const message = await client.messages.create({
+    //   model: "claude-sonnet-4-20250514",
+    //   max_tokens: 1000,
+    //   messages: [
+    //     {
+    //       role: "user",
+    //       content: interviewPrepPrompt(jobDescription),
+    //     },
+    //   ],
+    // });
+
+    // const questions = (message.content[0] as { text: string }).text;
+
+    return NextResponse.json({ response });
 
   } catch (error) {
     return NextResponse.json(

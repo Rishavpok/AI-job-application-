@@ -10,12 +10,24 @@ export default function ResultsPage() {
   const [skillsMatch, setSkillsMatch] = useState([]);
   const [keywordAdded, setkeywordAdded] = useState([]);
   const [stats, setStats] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [jobDescription, setJobDescription] = useState("");
 
   const printArea = useRef(null);
 
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
   };
+
+  async function handleInterview() {
+    try {
+      
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   function printContent() {
     const content = printArea?.current?.innerHTML;
@@ -38,13 +50,14 @@ export default function ResultsPage() {
   useEffect(() => {
     setTailoredCV(localStorage.getItem("tailoredCV") || "");
     setCoverLetter(localStorage.getItem("coverLetter") || "");
+    setJobDescription(localStorage.getItem("jobDescription") || "");
     const storedStats = localStorage.getItem("stats");
     const parsed = storedStats ? JSON.parse(storedStats) : null;
 
     setStats(parsed);
-    setSkillsMatch(parsed.skills_matched)
-    setgapsfound(parsed.gaps_found)
-    setkeywordAdded(parsed.keywords_added)
+    setSkillsMatch(parsed.skills_matched);
+    setgapsfound(parsed.gaps_found);
+    setkeywordAdded(parsed.keywords_added);
   }, []);
   return (
     <main className="min-h-screen bg-white font-sans">
@@ -112,17 +125,23 @@ export default function ResultsPage() {
           </div>
           <div className="flex items-center gap-6 text-center">
             <div>
-              <p className="text-lg font-medium text-emerald-800">{skillsMatch.length}</p>
+              <p className="text-lg font-medium text-emerald-800">
+                {skillsMatch.length}
+              </p>
               <p className="text-xs text-emerald-600">Skills matched</p>
             </div>
             <div className="w-px h-8 bg-emerald-200" />
             <div>
-              <p className="text-lg font-medium text-emerald-800">{ gapsFound.length }</p>
+              <p className="text-lg font-medium text-emerald-800">
+                {gapsFound.length}
+              </p>
               <p className="text-xs text-emerald-600">Gaps found</p>
             </div>
             <div className="w-px h-8 bg-emerald-200" />
             <div>
-              <p className="text-lg font-medium text-emerald-800">{ keywordAdded.length }</p>
+              <p className="text-lg font-medium text-emerald-800">
+                {keywordAdded.length}
+              </p>
               <p className="text-xs text-emerald-600">Keywords added</p>
             </div>
           </div>
@@ -291,8 +310,7 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            {/* Next step CTA */}
-            {/* <div className="bg-gray-900 rounded-xl p-4 text-center">
+            <div className="bg-gray-900 rounded-xl p-4 text-center">
               <p className="text-xs font-medium text-white mb-1">
                 Ready for interviews?
               </p>
@@ -302,7 +320,7 @@ export default function ResultsPage() {
               <button className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors">
                 Prepare for interview →
               </button>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

@@ -64,7 +64,6 @@ async function handleFormSubmit(e: React.FormEvent) {
     });
     const analyzeData = await analyzeRes.json();
 
-    console.log(analyzeData)
 
     // Step 2 — call /api/cover-letter with JSON
     const coverLetterRes = await fetch("/api/cover-letter", {

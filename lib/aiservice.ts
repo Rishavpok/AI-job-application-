@@ -14,4 +14,8 @@ import { GeminiService } from "./gemni";
      async analyze(prompt : string) {
          return await this.client.analyze(prompt)
     }
+
+    async interview( prompt : string ) {
+        return await this.client.interview(prompt)
+    }
 }
