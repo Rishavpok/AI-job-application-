@@ -22,9 +22,12 @@ export async function POST(req: NextRequest) {
 
     const service = new AIService('gemini')
 
-     const response = await service.analyze(
+    const response = await service.analyze(
       analyzeresumePrompt(resumeText, jobDescription)
     )
+    if (!response) {
+      return NextResponse.json({ error: "No response from AI" }, { status: 500 });
+    }
     return NextResponse.json(JSON.parse(response));
   } catch (error: any) {
     console.error("API ERROR:", error);
