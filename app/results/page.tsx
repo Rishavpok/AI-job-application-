@@ -21,6 +21,11 @@ export default function ResultsPage() {
 
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
+    if(tab === 1) {
+      if(!coverLetter) {
+      getCoverLetter()
+      }
+    }
   };
 
   async function getCoverLetter() {
@@ -35,7 +40,7 @@ export default function ResultsPage() {
         }),
       });
       const coverLetterData = await coverLetterRes.json();
-      setCoverLetter(coverLetterData)
+      setCoverLetter(coverLetterData.coverLetter)
     } catch (error) {
       alert("Something went wrong. Please try again.");
     } finally {
