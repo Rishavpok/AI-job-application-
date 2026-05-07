@@ -66,21 +66,21 @@ async function handleFormSubmit(e: React.FormEvent) {
 
 
     // Step 2 — call /api/cover-letter with JSON
-    const coverLetterRes = await fetch("/api/cover-letter", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        resumeText: analyzeData.tailoredCV,
-        jobDescription: jobDescription,
-      }),
-    });
-    const coverLetterData = await coverLetterRes.json();
+    // const coverLetterRes = await fetch("/api/cover-letter", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     resumeText: analyzeData.tailoredCV,
+    //     jobDescription: jobDescription,
+    //   }),
+    // });
+    // const coverLetterData = await coverLetterRes.json();
 
     // Step 3 — save everything to localStorage
     localStorage.setItem("tailoredCV", analyzeData.tailoredCV);
     localStorage.setItem("resumeText", analyzeData.resumeText);
     localStorage.setItem("jobDescription", jobDescription);
-    localStorage.setItem("coverLetter", coverLetterData.coverLetter);
+    // localStorage.setItem("coverLetter", coverLetterData.coverLetter);
     localStorage.setItem("stats", JSON.stringify(analyzeData.stats));
 
 

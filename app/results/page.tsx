@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function ResultsPage() {
@@ -12,14 +13,38 @@ export default function ResultsPage() {
   const [stats, setStats] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [jobDescription, setJobDescription] = useState("");
+  const [isCoverLetterLoading, setisCoverLetterLoading] = useState(false);
 
   const printArea = useRef(null);
+
+  const router = useRouter();
 
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
   };
 
+  async function getCoverLetter() {
+    setisCoverLetterLoading(true)
+    try {
+      const coverLetterRes = await fetch("/api/cover-letter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          resumeText: tailoredCV,
+          jobDescription: jobDescription,
+        }),
+      });
+      const coverLetterData = await coverLetterRes.json();
+      setCoverLetter(coverLetterData)
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setisCoverLetterLoading(true);
+    }
+  }
+
   async function handleInterview() {
+    setIsLoading(true)
     try {
       const interviewQuestion = await fetch("/api/interview-prep", {
         method: "POST",
@@ -29,10 +54,9 @@ export default function ResultsPage() {
         }),
       });
 
-      // const questions = await interviewQuestion.json()
-
-      console.log(interviewQuestion)
-
+      const questions = await interviewQuestion.json()
+      localStorage.setItem("questions",JSON.stringify(questions.questions))
+      router.push("/interview");
     } catch (error) {
       alert("Something went wrong. Please try again.");
     } finally {
@@ -60,7 +84,7 @@ export default function ResultsPage() {
 
   useEffect(() => {
     setTailoredCV(localStorage.getItem("tailoredCV") || "");
-    setCoverLetter(localStorage.getItem("coverLetter") || "");
+    // setCoverLetter(localStorage.getItem("coverLetter") || "");
     setJobDescription(localStorage.getItem("jobDescription") || "");
     const storedStats = localStorage.getItem("stats");
     const parsed = storedStats ? JSON.parse(storedStats) : null;
@@ -328,8 +352,15 @@ export default function ResultsPage() {
               <p className="text-xs text-gray-400 mb-4 leading-relaxed">
                 Get predicted questions based on this role
               </p>
-              <button onClick={handleInterview} className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors">
-                Prepare for interview →
+              <button
+                onClick={handleInterview}
+                className="w-full py-2.5 rounded-lg text-xs font-medium bg-emerald-500 text-white hover:bg-emerald-400 transition-colors"
+              >
+                {
+                  !isLoading ? (
+                    <div> Prepare for interview →</div>
+                  ) : "......"
+                }
               </button>
             </div>
           </div>

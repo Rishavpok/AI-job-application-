@@ -19,21 +19,8 @@ export async function POST(req: NextRequest) {
     const service = new AIService('gemini')
 
     const response = await service.interview(interviewPrepPrompt(jobDescription))
-
-    // const message = await client.messages.create({
-    //   model: "claude-sonnet-4-20250514",
-    //   max_tokens: 1000,
-    //   messages: [
-    //     {
-    //       role: "user",
-    //       content: interviewPrepPrompt(jobDescription),
-    //     },
-    //   ],
-    // });
-
-    // const questions = (message.content[0] as { text: string }).text;
-
-    return NextResponse.json({ response });
+    const parsed = JSON.parse(response);
+    return NextResponse.json(parsed);
 
   } catch (error) {
     return NextResponse.json(
