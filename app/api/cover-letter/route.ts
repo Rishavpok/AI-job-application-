@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/lib/claude";
 import { coverLetterPrompt } from "@/lib/prompts";
 import { AIService } from "@/lib/aiservice";
 

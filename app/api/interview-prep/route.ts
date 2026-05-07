@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/lib/claude";
 import { interviewPrepPrompt } from "@/lib/prompts";
 import { AIService } from "@/lib/aiservice";
 
@@ -19,6 +18,9 @@ export async function POST(req: NextRequest) {
     const service = new AIService('gemini')
 
     const response = await service.interview(interviewPrepPrompt(jobDescription))
+    if (!response) {
+      return NextResponse.json({ error: "No response from AI" }, { status: 500 });
+    }
     const parsed = JSON.parse(response);
     return NextResponse.json(parsed);
 
