@@ -15,7 +15,7 @@ export default function ResultsPage() {
   const [jobDescription, setJobDescription] = useState("");
   const [isCoverLetterLoading, setisCoverLetterLoading] = useState(false);
 
-  const printArea = useRef(null);
+  const printArea = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
