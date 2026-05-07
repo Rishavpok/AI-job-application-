@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    typescript: {
+    // Make sure this is NOT set to true (it skips errors)
+    ignoreBuildErrors: false,
+  },
 };
 
 export default nextConfig;
